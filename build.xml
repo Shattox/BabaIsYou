@@ -1,0 +1,40 @@
+<project name="BabaIsYou" basedir=".">
+    <description> Build file for BabaIsYou Project </description>
+
+    <property name="src.BabaIsYou" value="src/fr/uge/BabaIsYou"/>
+    <property name="src.BabaIsYou.Main" value="src/fr/uge/BabaIsYou/Main"/>
+    <property name="classes.BabaIsYou" value="classes/fr/uge/BabaIsYou"/>
+    <property name="classes.BabaIsYou.Main" value="classes/fr/uge/BabaIsYou/Main"/>
+    <property name="lib" value="lib/fr/umlv/zen5/zen5.jar"/>
+
+    <!-- Compile Java code from src -->
+    <target name="compile" description="compile src">
+        <mkdir dir="${classes.BabaIsYou.Main}"/>
+        <javac includeantruntime="false" srcdir="src" destdir="classes" classpath="${lib}"/>
+    </target>
+    
+    <!-- Create the executable jar -->
+    <target name="jar" depends="compile">
+        <jar destfile="baba.jar">
+            <fileset dir="classes"/>
+            <zipfileset includes="**/*.class" src="${lib}"/>
+            <manifest>
+                <attribute name="Main-Class" value="fr.uge.BabaIsYou.Main.Main"/>
+            </manifest>
+        </jar>
+    </target>
+    
+    <!-- Generate the javadoc in docs/doc -->
+    <target name="javadoc" description="generate javadoc">
+        <javadoc sourcepath="src" destdir="docs/doc" classpath="${lib}"/>
+    </target>
+    
+    <!-- Delete classes files and baba.jar -->
+    <target name="clean">
+        <delete includeemptydirs="true">
+            <fileset dir="classes" includes="**/*"/>
+            <fileset dir="docs/doc" includes="**/*"/>
+        </delete>
+        <delete file="baba.jar"/>
+    </target>
+</project>
